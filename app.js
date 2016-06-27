@@ -20,7 +20,7 @@ function Image(name, location){
 //creating all of the image objects//
 
 var bag = new Image('bag','assets/bag.jpg');
-var banana = new Image('banana','assets/');
+var banana = new Image('banana','assets/banana.jpg');
 var bathroom = new Image('bathroom','assets/bathroom.jpg' );
 var boots = new Image ('boots','assets/boots.jpg');
 var breakfast = new Image ('breakfast', 'assets/breakfast.jpg');
@@ -36,19 +36,33 @@ var shark = new Image ('shark', 'assets/shark.jpg');
 var sweep = new Image ('sweep', 'assets/sweep.png');
 var tauntaun = new Image ('tauntaun', 'assets/tauntaun.jpg');
 var unicorn = new Image ('unicorn', 'assets/unicorn.jpg');
-var usb = new Image ('usb', 'assets/usb.git');
+var usb = new Image ('usb', 'assets/usb.gif');
 var waterCan = new Image ('waterCan', 'assets/water-can.jpg');
 var wineGlass = new Image ('wineGlass', 'assets/wine-glass.jpg');
 
 //now getting three random numbers
 
-var firstImageRandomNum = makeRandomNum();
-var secondImageRandomNum = makeRandomNum();
-var thirdImageRandomNum = makeRandomNum();
-
 function makeThreeImages(){
+  var firstImageRandomNum = makeRandomNum();
+  // console.log(firstImageRandomNum);
+  var secondImageRandomNum = makeRandomNum();
+  // console.log(secondImageRandomNum);
+  while (firstImageRandomNum === secondImageRandomNum){
+    secondImageRandomNum = makeRandomNum();
+    // console.log('this fires');
+  }
+
+  var thirdImageRandomNum = makeRandomNum();
+  // console.log(thirdImageRandomNum);
+  while(firstImageRandomNum === thirdImageRandomNum || secondImageRandomNum === thirdImageRandomNum){
+    thirdImageRandomNum = makeRandomNum();
+    // console.log('this also fires');
+  }
+
+  // console.log('make Three Images was called');
   var firstImage = document.getElementById('firstImage');
   firstImage.src = imageArray[firstImageRandomNum].location;
+  // console.log(firstImage);
   var secondImage = document.getElementById('secondImage');
   secondImage.src = imageArray[secondImageRandomNum].location;
   var thirdImage = document.getElementById('thirdImage');
@@ -56,3 +70,6 @@ function makeThreeImages(){
 }
 
 makeThreeImages();
+
+
+document.getElementById('images').addEventListener('click', makeThreeImages);

@@ -57,6 +57,11 @@ nav {
   padding-top: 50px;
 }
 
+img {
+  height: 100px;
+  width: 100px;
+}
+
 #images div{
   display:inline-block;
   margin-right: 30px;
