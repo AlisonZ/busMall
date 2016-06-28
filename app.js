@@ -7,14 +7,16 @@ function makeRandomNum(){
 };
 //all the created image objects will be pushed to this array//
 var imageArray = [];
+var clicked = [];
 
 //this is the constructor for the objects//
 function Image(name, location){
   this.name = name;
   this.location = location;
-  this.views = 0;
+  this.chosen = 0;
   this.display = 0;
   imageArray.push(this);
+  // this.clickedOn = [];
 }
 
 //creating all of the image objects//
@@ -75,6 +77,7 @@ var clicks = 0;
 
 document.getElementById('images').addEventListener('click', makeThreeImages);
 
+// so this adds the clicks up and turns off the event listener when 25 have been clicked
 document.getElementById('images').onclick = function(event){
   clicks++;
   if (clicks > 24){
@@ -82,3 +85,15 @@ document.getElementById('images').onclick = function(event){
     alert('All done! Thanks for your participation!');
   }
 };
+
+//this is not sending the image name to the clicked array
+// document.getElementById(firstImage).onclick = function(event){
+//   console.log('click listener is working');
+//   //why doesn't this work
+//   clicked.push(firstImage.name);
+// };
+
+//need to calculate everytime something is displayed
+
+
+//then need a math formula that calculates percentage based on the above two elements

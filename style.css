@@ -59,11 +59,12 @@ nav {
 
 img {
   height: 400px;
-  width: 300px;
-  margin:30px;
+  width: 350px;
+  margin:20px;
+  border: dashed;
+  border-width: thin;
 }
 
-#images div{
-  display:inline-block;
-  margin: 0 auto; 
+#firstImage{
+  margin-left: 150px;
 }
