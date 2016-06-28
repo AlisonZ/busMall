@@ -1,13 +1,11 @@
 'use strict';
 //Global variables
-
-//look at math mdn for a more appropriate random number generator//
 function makeRandomNum(){
   return Math.floor(Math.random() * imageArray.length);
 };
-//all the created image objects will be pushed to this array//
 var imageArray = [];
-var clicked = [];
+var currentIndices = [];
+var clicks = 0;
 
 //this is the constructor for the objects//
 function Image(name, location){
@@ -16,11 +14,9 @@ function Image(name, location){
   this.chosen = 0;
   this.display = 0;
   imageArray.push(this);
-  // this.clickedOn = [];
 }
 
 //creating all of the image objects//
-
 var bag = new Image('bag','assets/bag.jpg');
 var banana = new Image('banana','assets/banana.jpg');
 var bathroom = new Image('bathroom','assets/bathroom.jpg' );
@@ -38,62 +34,77 @@ var shark = new Image ('shark', 'assets/shark.jpg');
 var sweep = new Image ('sweep', 'assets/sweep.png');
 var tauntaun = new Image ('tauntaun', 'assets/tauntaun.jpg');
 var unicorn = new Image ('unicorn', 'assets/unicorn.jpg');
-var usb = new Image ('usb', 'assets/usb.gif');
+var usb = new Image ('usb', 'assets/usb.png');
 var waterCan = new Image ('waterCan', 'assets/water-can.jpg');
 var wineGlass = new Image ('wineGlass', 'assets/wine-glass.jpg');
 
+
+
+
 //now getting three random numbers
 
+function handleClicks(event){
+  console.log(event.target.alt);
+  clicks += 1;
+  console.log(clicks);
+  for(var i = 0; i < imageArray.length; i++){
+    if (event.target.alt === imageArray[i].name){
+      imageArray[i].chosen += 1;
+      console.log(imageArray[i].name + ' has ' + imageArray[i].chosen + ' clicks');
+    }
+  }
+  if(clicks < 25){
+    makeThreeImages();
+  }else{
+    // console.log('out of clicks');
+    //turn off event listeners
+    //show button for results
+    //draw chart
+  };
+}
+
 function makeThreeImages(){
+  // collect data on the clicked image
+
+  // start generating new images
   var firstImageRandomNum = makeRandomNum();
-  // console.log(firstImageRandomNum);
+  while(firstImageRandomNum === currentIndices[0] || firstImageRandomNum === currentIndices[1] || firstImageRandomNum === currentIndices[2]) {
+    firstImageRandomNum = makeRandomNum();
+    // console.log('duplicate in first');
+  }
+
   var secondImageRandomNum = makeRandomNum();
-  // console.log(secondImageRandomNum);
-  while (firstImageRandomNum === secondImageRandomNum){
+  while(firstImageRandomNum === secondImageRandomNum || secondImageRandomNum === currentIndices[0] || secondImageRandomNum === currentIndices[1] || secondImageRandomNum === currentIndices[2]) {
     secondImageRandomNum = makeRandomNum();
-    // console.log('this fires');
+    // console.log('duplicate in second');
   }
 
   var thirdImageRandomNum = makeRandomNum();
-  // console.log(thirdImageRandomNum);
-  while(firstImageRandomNum === thirdImageRandomNum || secondImageRandomNum === thirdImageRandomNum){
+  while(thirdImageRandomNum === firstImageRandomNum || thirdImageRandomNum === secondImageRandomNum || thirdImageRandomNum === currentIndices[0] || thirdImageRandomNum === currentIndices[1] || thirdImageRandomNum === currentIndices[2]) {
     thirdImageRandomNum = makeRandomNum();
-    // console.log('this also fires');
+    // console.log('right index matched a prior image');
   }
+  currentIndices = [firstImageRandomNum, secondImageRandomNum,thirdImageRandomNum];
+  // return currentIndices;
 
-  // console.log('make Three Images was called');
   var firstImage = document.getElementById('firstImage');
   firstImage.src = imageArray[firstImageRandomNum].location;
-  // console.log(firstImage);
+  firstImage.alt = imageArray[firstImageRandomNum].name;
+  imageArray[firstImageRandomNum].display++;
+
   var secondImage = document.getElementById('secondImage');
   secondImage.src = imageArray[secondImageRandomNum].location;
+  secondImage.alt = imageArray[secondImageRandomNum].name;
+  imageArray[secondImageRandomNum].display++;
+
   var thirdImage = document.getElementById('thirdImage');
   thirdImage.src = imageArray[thirdImageRandomNum].location;
+  thirdImage.alt = imageArray[thirdImageRandomNum].name;
+  imageArray[thirdImageRandomNum].display++;
+
 }
 
-//needs to be based on click events, so need an event handler
 makeThreeImages();
-var clicks = 0;
 
-document.getElementById('images').addEventListener('click', makeThreeImages);
-
-// so this adds the clicks up and turns off the event listener when 25 have been clicked
-document.getElementById('images').onclick = function(event){
-  clicks++;
-  if (clicks > 24){
-    document.getElementById('images').removeEventListener('click', makeThreeImages);
-    alert('All done! Thanks for your participation!');
-  }
-};
-
-//this is not sending the image name to the clicked array
-// document.getElementById(firstImage).onclick = function(event){
-//   console.log('click listener is working');
-//   //why doesn't this work
-//   clicked.push(firstImage.name);
-// };
-
-//need to calculate everytime something is displayed
-
-
+document.getElementById('images').addEventListener('click', handleClicks);
 //then need a math formula that calculates percentage based on the above two elements
