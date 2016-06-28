@@ -69,7 +69,16 @@ function makeThreeImages(){
   thirdImage.src = imageArray[thirdImageRandomNum].location;
 }
 
+//needs to be based on click events, so need an event handler
 makeThreeImages();
-
+var clicks = 0;
 
 document.getElementById('images').addEventListener('click', makeThreeImages);
+
+document.getElementById('images').onclick = function(event){
+  clicks++;
+  if (clicks > 24){
+    document.getElementById('images').removeEventListener('click', makeThreeImages);
+    alert('All done! Thanks for your participation!');
+  }
+};

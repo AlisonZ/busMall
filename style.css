@@ -58,13 +58,12 @@ nav {
 }
 
 img {
-  height: 100px;
-  width: 100px;
+  height: 400px;
+  width: 300px;
+  margin:30px;
 }
 
 #images div{
   display:inline-block;
-  margin-right: 30px;
-  margin-left: 30px;
-  margin-top: 50px;
+  margin: 0 auto; 
 }
