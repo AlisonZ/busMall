@@ -58,8 +58,8 @@ nav {
 }
 
 img {
-  height: 400px;
-  width: 350px;
+  /*height: 400px;
+  width: 350px;*/
   margin:20px;
   border: dashed;
   border-width: thin;
