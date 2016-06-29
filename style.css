@@ -68,3 +68,10 @@ img {
 #firstImage{
   margin-left: 150px;
 }
+
+canvas{
+	outline: solid;
+	outline-width: medium;
+	outline-color: black;
+
+}

@@ -38,10 +38,22 @@ var usb = new Image ('usb', 'assets/usb.png');
 var waterCan = new Image ('waterCan', 'assets/water-can.jpg');
 var wineGlass = new Image ('wineGlass', 'assets/wine-glass.jpg');
 
-
-
-
 //now getting three random numbers
+function handleButton(){
+  // console.log('handle button working');
+  var clickChart = document.getElementById('clickChart').getContext('2d');
+  var barData = {
+    labels: makeNamesArray(),
+    datasets:[
+      {
+        fillColor: 'red',
+        strokeColor: 'black',
+        data: makeClickData()
+      },
+    ]
+  };
+  new Chart.Bar(clickChart, barData);
+}
 
 function handleClicks(event){
   console.log(event.target.alt);
@@ -53,19 +65,22 @@ function handleClicks(event){
       console.log(imageArray[i].name + ' has ' + imageArray[i].chosen + ' clicks');
     }
   }
-  if(clicks < 25){
+  if(clicks < 5){
     makeThreeImages();
-  }else{
-    // console.log('out of clicks');
+  } else{
+    document.getElementById('button').addEventListener('click',handleButton);
+    console.log('out of clicks');
+    //  makeClickData(){
+      // return chartData;
     //turn off event listeners
     //show button for results
     //draw chart
   };
+    // makeClickData();
 }
 
 function makeThreeImages(){
   // collect data on the clicked image
-
   // start generating new images
   var firstImageRandomNum = makeRandomNum();
   while(firstImageRandomNum === currentIndices[0] || firstImageRandomNum === currentIndices[1] || firstImageRandomNum === currentIndices[2]) {
@@ -101,10 +116,27 @@ function makeThreeImages(){
   thirdImage.src = imageArray[thirdImageRandomNum].location;
   thirdImage.alt = imageArray[thirdImageRandomNum].name;
   imageArray[thirdImageRandomNum].display++;
-
 }
 
+  //trying to get a data array for the chart
 makeThreeImages();
-
 document.getElementById('images').addEventListener('click', handleClicks);
-//then need a math formula that calculates percentage based on the above two elements
+
+
+var makeClickData = function(){
+  var chartData = [];
+  for(var i = 0; i < imageArray.length; i++){
+    chartData.push(imageArray[i].chosen);
+  }
+  console.log(chartData);
+  return chartData;
+};
+
+var makeNamesArray = function(){
+  var namesData = [];
+  for (var i = 0; i < imageArray.length; i++){
+    namesData.push(imageArray[i].name);
+  }
+  console.log(namesData);
+  return namesData;
+};
